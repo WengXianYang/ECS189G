@@ -1,0 +1,24 @@
+dataset,stage,unit,count,evidence
+Upworthy,raw,tests,4873,independently recomputed
+Upworthy,raw,packages,22666,independently recomputed
+Upworthy,after_randomization_filter,tests,3823,independently recomputed
+Upworthy,after_randomization_filter,packages,18388,independently recomputed
+Upworthy,same_image_excerpt_distinct_headlines,candidate_pairs,16486,independently recomputed
+Upworthy,after_min500_before_ties,candidate_pairs,16486,independently recomputed
+Upworthy,after_exact_tie_exclusion,candidate_pairs,16485,independently recomputed
+Upworthy,one_pair_per_eligible_test,pairs,1929,independently recomputed
+Upworthy,dev,pairs,386,independently recomputed
+Upworthy,locked_test,pairs,1543,independently recomputed
+Reddit,raw_records,rows,132308,independently recomputed
+Reddit,raw_rows,rows,132303,independently recomputed
+Reddit,malformed_rows_skipped,rows,5,independently recomputed
+Reddit,raw_images,images,16736,independently recomputed
+Reddit,after_missing_filter,rows,132302,independently recomputed
+Reddit,after_dedup,rows,132209,independently recomputed
+Reddit,after_min_votes,rows,132206,independently recomputed
+Reddit,image_subreddit_groups_with_pair,groups,23990,teammate-reported; sampling stages not independently rebuilt
+Reddit,images_with_pair,pairs,15744,teammate-reported; sampling stages not independently rebuilt
+Reddit,pairs_after_tie_drop,pairs,15411,teammate-reported; sampling stages not independently rebuilt
+Reddit,supplied_sample_pairs,pairs,500,independently recomputed
+Reddit,pairs_within_30_days,pairs,192,independently recomputed
+Reddit,pairs_outside_30_days,pairs,308,independently recomputed

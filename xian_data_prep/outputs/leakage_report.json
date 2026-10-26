@@ -1,0 +1,8 @@
+{
+  "headline_group_overlap_dev_test": 0,
+  "normalized_headline_overlap_dev_test": 0,
+  "reddit_title_overlap_with_upworthy_dev": 0,
+  "reddit_title_overlap_with_upworthy_test": 0,
+  "reddit_usage": "All 500 supplied pairs retained as a separate evaluation domain; no Reddit dev/test split.",
+  "test_id_overlap_dev_test": 0
+}

@@ -1,0 +1,20 @@
+{
+  "algorithm": "headline-components-stratified-v1",
+  "dev_fraction": "1/5",
+  "inputs_sha256": {
+    "reddit_pairs.csv": "8a4444258efa05f4a0ca209fcf7a1e3ae8420b57ebed3b7fb0ffeaaff607e08e",
+    "upworthy_pairs.csv": "c380dcd4e6419c4accae971b9b05ce0d789c0fb9929b54fa4b0f0091cd2896fb"
+  },
+  "outputs_sha256": {
+    "headline_groups.csv": "114c27f775da7832f88026756cb0f04d17eb116c849a7d46988c60e287899daa",
+    "leakage_report.json": "92bb043561a7a5e64b8df90b241f76d6afe68458a2ac214998ea22ce940c763e",
+    "split_summary.json": "c88c763752fe29cc13f11511dbfb34ca5d2b1cf9c19350dea53e7782a9db9f37",
+    "upworthy_dev.csv": "d49bcdd0a67aa1a3caa0a5fbb90e2bf92993ab8609a411f51ca38fa5d8bb2c61",
+    "upworthy_test.csv": "765e5a02f916ca9dceb8b7b6525b2c3d04c4b41958c0753cec1ef49475849e60"
+  },
+  "schema_version": 1,
+  "scope": "Upworthy dev/test only; supplied Reddit sample retained with documented rule mismatch",
+  "seed": 42,
+  "team_confirmation": "Pending independent teammate reproduction; see TEST_CONFIRMATIONS.md",
+  "test_pairs": 1543
+}

@@ -1,0 +1,23 @@
+{
+  "raw_lines_in_file": 132308,
+  "malformed_lines_skipped": 5,
+  "raw_rows": 132303,
+  "raw_images": 16736,
+  "after_missing_filter": 132302,
+  "after_dedup": 132209,
+  "after_min_votes": 132206,
+  "image_subreddit_groups_with_pair": 23990,
+  "images_with_pair": 15744,
+  "pairs_after_tie_drop": 15411,
+  "final_pairs": 500,
+  "final_first_posted_wins": 0.68,
+  "final_winner_A_share": 0.51,
+  "final_subreddits": 14,
+  "sha256_reddit_pairs": "8a4444258efa05f4a0ca209fcf7a1e3ae8420b57ebed3b7fb0ffeaaff607e08e",
+  "settings": {
+    "winner_metric": "score",
+    "n_pairs": 500,
+    "seed": 42,
+    "min_total_votes": 1
+  }
+}

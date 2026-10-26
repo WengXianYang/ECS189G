@@ -1,0 +1,55 @@
+{
+  "algorithm": "headline-components-stratified-v1",
+  "dev_fraction": "1/5",
+  "dev_stratum_targets": {
+    "A_not_significant": 132,
+    "A_significant": 56,
+    "B_not_significant": 143,
+    "B_significant": 55
+  },
+  "group_size_counts": {
+    "1": 1834,
+    "2": 43,
+    "3": 3
+  },
+  "headline_groups": 1880,
+  "normalization": "re.sub(r'[^a-z0-9]', '', text.lower())",
+  "reddit_pairs_within_30_days": 192,
+  "reddit_supplied_pairs": 500,
+  "seed": 42,
+  "splits": {
+    "dev": {
+      "headline_groups": 374,
+      "pairs": 386,
+      "significant_pairs": 111,
+      "stratum_counts": {
+        "A_not_significant": 132,
+        "A_significant": 56,
+        "B_not_significant": 143,
+        "B_significant": 55
+      },
+      "winner_counts": {
+        "A": 188,
+        "B": 198
+      }
+    },
+    "test": {
+      "headline_groups": 1506,
+      "pairs": 1543,
+      "significant_pairs": 440,
+      "stratum_counts": {
+        "A_not_significant": 530,
+        "A_significant": 222,
+        "B_not_significant": 573,
+        "B_significant": 218
+      },
+      "winner_counts": {
+        "A": 752,
+        "B": 791
+      }
+    }
+  },
+  "stratification": "true_winner x is_significant; largest-remainder integer dev quotas",
+  "test_fraction": "4/5",
+  "total_pairs": 1929
+}
