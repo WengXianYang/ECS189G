@@ -1,0 +1,14 @@
+# raw downloads
+data/raw/
+upworthy-archive-datasets/
+*.csv.gz
+
+# large regenerable outputs
+reddit/reddit_pairs_all.csv
+
+# python / OS
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+.DS_Store
