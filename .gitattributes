@@ -1,0 +1,5 @@
+# Preserve exact data/manifest bytes for matching Windows and Unix hashes.
+xian_data_prep/** text eol=lf
+xian_data_prep/inputs/* -text
+xian_data_prep/outputs/* -text
+xian_data_prep/TEST_LOCK.json -text

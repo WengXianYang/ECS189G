@@ -1,0 +1,75 @@
+{
+  "integrity_status": "PASS",
+  "pair_inputs_sha256": {
+    "reddit_pairs.csv": "8a4444258efa05f4a0ca209fcf7a1e3ae8420b57ebed3b7fb0ffeaaff607e08e",
+    "upworthy_pairs.csv": "c380dcd4e6419c4accae971b9b05ce0d789c0fb9929b54fa4b0f0091cd2896fb"
+  },
+  "raw_sha256": {
+    "reddit_gzip": "cd98022b8efc262abefb1f155552e61f467532fc9c3606e67eda4a897536cdc2",
+    "upworthy": "8368313b060f4015a0c6fb34e6d788163cee29554144aba9390b14922eb9d8ce"
+  },
+  "reddit": {
+    "decision": "Keep supplied 500-pair sample unchanged, per Xian's explicit instruction; report window mismatch.",
+    "eligibility_status": "Not fully compliant with the 30-day rule; not a newly locked Reddit test set.",
+    "failures": [],
+    "independently_recomputed_counts": {
+      "after_dedup": 132209,
+      "after_min_votes": 132206,
+      "after_missing_filter": 132302,
+      "malformed_rows_skipped": 5,
+      "raw_images": 16736,
+      "raw_records": 132308,
+      "raw_rows": 132303
+    },
+    "pairs_checked_against_raw": 500,
+    "pairs_outside_30_days": 308,
+    "pairs_within_30_days": 192,
+    "supplied_counts": {
+      "after_dedup": 132209,
+      "after_min_votes": 132206,
+      "after_missing_filter": 132302,
+      "final_first_posted_wins": 0.68,
+      "final_pairs": 500,
+      "final_subreddits": 14,
+      "final_winner_A_share": 0.51,
+      "image_subreddit_groups_with_pair": 23990,
+      "images_with_pair": 15744,
+      "malformed_lines_skipped": 5,
+      "pairs_after_tie_drop": 15411,
+      "raw_images": 16736,
+      "raw_lines_in_file": 132308,
+      "raw_rows": 132303,
+      "settings": {
+        "min_total_votes": 1,
+        "n_pairs": 500,
+        "seed": 42,
+        "winner_metric": "score"
+      },
+      "sha256_reddit_pairs": "8a4444258efa05f4a0ca209fcf7a1e3ae8420b57ebed3b7fb0ffeaaff607e08e"
+    },
+    "supplied_sample_pairs": 500
+  },
+  "rule_compliance_status": "Upworthy passes; Reddit has a documented 30-day-window mismatch",
+  "upworthy": {
+    "counts": {
+      "after_randomization_filter_packages": 18388,
+      "after_randomization_filter_tests": 3823,
+      "candidate_pairs_after_min500_before_ties": 16486,
+      "candidate_pairs_before_impression_filter": 16486,
+      "eligible_non_tied_candidate_pairs": 16485,
+      "exact_ctr_tie_candidates": 1,
+      "raw_packages": 22666,
+      "raw_tests": 4873,
+      "selected_pairs": 1929,
+      "tests_with_eligible_non_tied_pairs": 1929,
+      "tests_with_isolated_pairs": 1929
+    },
+    "ctr_precision": "6 decimals; tolerance 0.0000005 plus 1e-12; winner uses exact integer cross-products",
+    "failures": [],
+    "minimum_selected_impressions": 758,
+    "pairs_checked_against_raw": 1929,
+    "pairs_with_identical_group_normalization": 5,
+    "sample_rule": "first 100 by SHA256('42:raw-check:' + test_id)",
+    "sample_size": 100
+  }
+}
