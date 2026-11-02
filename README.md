@@ -1,6 +1,0 @@
-# ECS189G
-
-Can LLMs Predict A/B Test Results, and Do They Know When They're Wrong?
-
-Xian's data split, independent raw-data checks, count table, and test-set lock are in
-[xian_data_prep/README.md](xian_data_prep/README.md).
