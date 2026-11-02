@@ -1,5 +1,8 @@
 {
-  "headline_group_overlap_dev_test": 0,
+  "content_group_overlap_dev_test": 0,
+  "excerpt_policy": "Not grouped or shown to models: generic taglines join unrelated stories.",
+  "image_id_overlap_dev_test": 0,
+  "nonempty_excerpt_overlap_dev_test_informational": 6,
   "normalized_headline_overlap_dev_test": 0,
   "reddit_title_overlap_with_upworthy_dev": 0,
   "reddit_title_overlap_with_upworthy_test": 0,

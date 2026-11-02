@@ -10,7 +10,7 @@ skipping tests when the model is confident, and in which settings predictions wo
 ```
 upworthy/   Upworthy pair builder, rules, 1,929 pairs   (Yurun)
 reddit/     Reddit pair builder, 500 pairs, counts       (Gaeun)
-xian_data_prep/   Grouped Upworthy dev/test split, test lock, and independent audit (Xian)
+xian_data_prep/   Headline/image-grouped Upworthy split v2, test lock, and audit (Xian)
 ```
 
 ## Data
@@ -28,6 +28,11 @@ Details: [upworthy/README_upworthy.md](upworthy/README_upworthy.md), [reddit/REA
 
 Split reproduction, test-set hashes, and independent data checks:
 [xian_data_prep/README.md](xian_data_prep/README.md).
+
+The active split contains 386 development pairs and 1,543 test pairs, with zero
+shared normalized headlines or image IDs. Excerpts are excluded from grouping
+and model inputs. The previous headline-only split is archived in
+`xian_data_prep/archive/headline-v1/`.
 
 ## Rules
 - The test set is locked after the dev/test split (hash recorded). Prompt tuning and thresholds use dev only.

@@ -1,5 +1,6 @@
 {
-  "algorithm": "headline-components-stratified-v1",
+  "algorithm": "headline-image-components-stratified-v2",
+  "content_groups": 1788,
   "dev_fraction": "1/5",
   "dev_stratum_targets": {
     "A_not_significant": 132,
@@ -7,19 +8,22 @@
     "B_not_significant": 143,
     "B_significant": 55
   },
+  "excerpt_grouping": false,
+  "excerpt_in_model_input": false,
   "group_size_counts": {
-    "1": 1834,
-    "2": 43,
-    "3": 3
+    "1": 1662,
+    "2": 113,
+    "3": 11,
+    "4": 2
   },
-  "headline_groups": 1880,
-  "normalization": "re.sub(r'[^a-z0-9]', '', text.lower())",
+  "grouping": "transitive components on either normalized headline OR image ID",
+  "normalization": "headlines: re.sub(r'[^a-z0-9]', '', text.lower()); opaque image IDs: strip()",
   "reddit_pairs_within_30_days": 192,
   "reddit_supplied_pairs": 500,
   "seed": 42,
   "splits": {
     "dev": {
-      "headline_groups": 374,
+      "content_groups": 359,
       "pairs": 386,
       "significant_pairs": 111,
       "stratum_counts": {
@@ -34,7 +38,7 @@
       }
     },
     "test": {
-      "headline_groups": 1506,
+      "content_groups": 1429,
       "pairs": 1543,
       "significant_pairs": 440,
       "stratum_counts": {
