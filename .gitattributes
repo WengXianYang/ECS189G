@@ -5,3 +5,6 @@ xian_data_prep/outputs/* -text
 xian_data_prep/TEST_LOCK.json -text
 xian_data_prep/archive/**/outputs/* -text
 xian_data_prep/archive/**/TEST_LOCK.json -text
+
+# Windows batch files need CRLF
+*.bat text eol=crlf

@@ -1,0 +1,31 @@
+{
+  "source": "xian_data_prep/outputs/upworthy_test.csv",
+  "source_sha256": "cf4bad68874fb42c7f01dfb87651fa95b0dc57fc17ec058286141a846a8417d3",
+  "out_sha256": "06d4b341fac7b1a6e11a9c49807d3a785662ca304342587fed96bee2ae1941f3",
+  "seed": 42,
+  "n_pairs": 1543,
+  "n_overlap": 150,
+  "per_shard": [
+    {
+      "shard": "A",
+      "pairs": 514,
+      "winner_A_share": 0.484,
+      "median_gap": 0.0029379999999999996,
+      "overlap": 53
+    },
+    {
+      "shard": "B",
+      "pairs": 513,
+      "winner_A_share": 0.491,
+      "median_gap": 0.0027930000000000003,
+      "overlap": 49
+    },
+    {
+      "shard": "C",
+      "pairs": 516,
+      "winner_A_share": 0.486,
+      "median_gap": 0.002781500000000001,
+      "overlap": 48
+    }
+  ]
+}

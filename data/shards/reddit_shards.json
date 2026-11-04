@@ -1,0 +1,31 @@
+{
+  "source": "reddit/reddit_pairs.csv",
+  "source_sha256": "8a4444258efa05f4a0ca209fcf7a1e3ae8420b57ebed3b7fb0ffeaaff607e08e",
+  "out_sha256": "5ac41a1291ca1c15d5df2b6783e7fc8d032d31ef5886972ecfdb6ef3f0af1044",
+  "seed": 42,
+  "n_pairs": 500,
+  "n_overlap": 0,
+  "per_shard": [
+    {
+      "shard": "A",
+      "pairs": 167,
+      "winner_A_share": 0.509,
+      "median_gap": 52.0,
+      "overlap": 0
+    },
+    {
+      "shard": "B",
+      "pairs": 167,
+      "winner_A_share": 0.515,
+      "median_gap": 72.0,
+      "overlap": 0
+    },
+    {
+      "shard": "C",
+      "pairs": 166,
+      "winner_A_share": 0.506,
+      "median_gap": 71.5,
+      "overlap": 0
+    }
+  ]
+}
