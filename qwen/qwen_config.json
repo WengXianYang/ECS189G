@@ -1,24 +1,4 @@
 {
-  "_note": "PLACEHOLDER prompts. Replace with the frozen team prompts (Xian, config freeze 11/3) before real runs. Keep the {headline_1} {headline_2} {context} slots and the JSON answer format.",
-  "model": "qwen3:14b",
-  "datasets": {
-    "upworthy": {
-      "system": "You are an expert at predicting which news headline gets more clicks. Answer only with JSON.",
-      "user": "Two headlines were A/B tested on the same story, with the same image.\n\nHeadline 1: {headline_1}\nHeadline 2: {headline_2}\n\nWhich headline got the higher click-through rate? Reply with JSON: {{\"choice\": 1 or 2, \"confidence\": 50-100}} where confidence is your probability (in %) that your choice is correct."
-    },
-    "reddit": {
-      "system": "You are an expert at predicting which Reddit post title gets a higher score. Answer only with JSON.",
-      "user": "The same image was posted twice in {context} with different titles.\n\nTitle 1: {headline_1}\nTitle 2: {headline_2}\n\nWhich title got the higher score? Reply with JSON: {{\"choice\": 1 or 2, \"confidence\": 50-100}} where confidence is your probability (in %) that your choice is correct."
-    }
-  },
-  "methods": {
-    "zero_shot": {"think": false, "num_predict": 64, "num_ctx": 4096},
-    "few_shot": {"think": false, "few_shot": true, "num_predict": 64, "num_ctx": 4096},
-    "reasoning": {"think": true, "num_predict": 2048, "num_ctx": 8192, "samples": 3,
-                  "instruction": "Think it through, then give the JSON answer."}
-  },
-  "few_shot": {
-    "upworthy": [],
-    "reddit": []
-  }
+  "protocol_config": "../config.yaml",
+  "_note": "Compatibility entry point; shared frozen config, prompts and few_shot.json are authoritative."
 }

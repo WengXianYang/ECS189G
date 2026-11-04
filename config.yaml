@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "protocol_id": "headline-prediction-v1",
+  "frozen_on": "2026-11-04",
+  "validation_status": "dev input review and offline checks; live model pilot pending",
+  "model": "qwen3:14b",
+  "model_digest": "sha256:bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+  "provider": "ollama",
+  "model_source": "https://registry.ollama.ai/v2/library/qwen3/manifests/14b",
+  "sampling": {
+    "seed": 42,
+    "greedy_temperature": 0.0,
+    "sample_temperature": 0.7,
+    "orders": ["AB", "BA"]
+  },
+  "system_file": "prompts/system.txt",
+  "confidence_file": "prompts/confidence.txt",
+  "few_shot_file": "few_shot.json",
+  "datasets": {
+    "upworthy": {
+      "task_file": "prompts/upworthy.txt",
+      "dev_pairs": "data/prompt_dev.csv",
+      "dev_shards": "data/shards/prompt_dev_shards.csv",
+      "test_pairs": "xian_data_prep/outputs/upworthy_test.csv",
+      "excerpt_in_input": false
+    },
+    "reddit": {
+      "task_file": "prompts/reddit.txt",
+      "test_pairs": "reddit/reddit_pairs.csv",
+      "few_shot_source": "upworthy dev; explicitly identified as cross-domain demonstrations"
+    }
+  },
+  "methods": {
+    "zero_shot": {"prompt_file": "prompts/zero_shot.txt", "think": false, "samples": 5, "num_predict": 64, "num_ctx": 4096},
+    "few_shot": {"prompt_file": "prompts/few_shot.txt", "think": false, "few_shot": true, "samples": 5, "num_predict": 64, "num_ctx": 4096},
+    "reasoning": {"prompt_file": "prompts/reasoning.txt", "think": true, "samples": 3, "num_predict": 2048, "num_ctx": 8192}
+  }
+}

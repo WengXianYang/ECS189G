@@ -1,0 +1,32 @@
+{
+  "frozen_on": "2026-11-04",
+  "live_dev_pilot": "pending; offline checks do not establish predictive performance",
+  "model": "qwen3:14b",
+  "model_digest": "sha256:bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+  "protocol_id": "headline-prediction-v1",
+  "schema_version": 1,
+  "sha256": {
+    "config.yaml": "a779e715f58659bdfada35a5d9d29c7dc9309d0fa2f1c469a8af949f3648170f",
+    "data/prompt_dev.csv": "84e377f95a7534b0a908b07ff11007d400b70943abcacf3f819e08caa9c26253",
+    "data/shards/prompt_dev_shards.csv": "6e3e0c2119d86548b2a8f70997b6e321ff9b791736aa9474fe11e79017dfcc70",
+    "data/shards/upworthy_dev_shards.csv": "509ac6fd1db9a2a27e6bb54d578de406ea94f823f8bb929abb804f6fd75e550e",
+    "experiments/dev_prompt_review.json": "49114bdbd5bf23608029794ba4cf9975f8a22996d730e5682bb41e3437a30947",
+    "experiments/few_shot_selection.json": "0c33e105a7c0341aeac5ab57dcf81574d3ba51157a21e94c57cbfb03a0f11a7f",
+    "experiments/protocol.py": "6e518609ed62ab393e67af714a315b03d878af21a92af8dd699f570283488c9a",
+    "experiments/select_examples.py": "d4b0c5ec3e19fe3c1f1c1f3a0ab31861859168feeb2df6a82fc58ed950d45ab3",
+    "few_shot.json": "67153d45035421e0d79a94674e3893e80a597d18dd7cd5badb6f91e8a42a2e29",
+    "prompts/confidence.txt": "f27d7b045914b1a936d8da38cd026c45b305e36b9867f9b5843cbba026f994f2",
+    "prompts/few_shot.txt": "ce634793cd7ba27a4ab56540d7d7dcafc10e1ab7a4ea28e8e5bd76d21fd2e0c2",
+    "prompts/reasoning.txt": "f3e3a4da3c9474d3f8216c7c4573274b4c94c917c7be60540f1e61091f913876",
+    "prompts/reddit.txt": "b769430e5ce1236b5af16b0c2b7dc834058007ade8aa24e422175b0b13d933c2",
+    "prompts/system.txt": "14a47d32ff4de1425d78804dcf407c6cf37ed0a8dfeaeebea2a31bc8023b565c",
+    "prompts/upworthy.txt": "a9c9f3057cb20626c1e51f84d2bcc527d675e9dfbce13baf7154bf063880a295",
+    "prompts/zero_shot.txt": "40ec6be9301ff9d7bdd91b8aa29f31cf9c12503d4de84c005c7e0d62dd91b9f1",
+    "qwen/qwen_config.json": "07608a9ebf95ff74f48bb9c75760ba9dcb99ff70d4557b36eb7068329f091c35",
+    "qwen/run_qwen.py": "1f92f306542e9908a30f35412d4e042a35e28d4a8062bf93435a9074fa77d521",
+    "xian_data_prep/TEST_LOCK.json": "8936fdd9ba066207f6d5dc16df001ee8fe2f4bf5fb0cc1a2bc57a72eb5d37e7c",
+    "xian_data_prep/archive/headline-v1/outputs/upworthy_test.csv": "765e5a02f916ca9dceb8b7b6525b2c3d04c4b41958c0753cec1ef49475849e60",
+    "xian_data_prep/outputs/upworthy_dev.csv": "2b14a8c8cac2f8ff075f06c8e21a9e575c07a7276a01dce89bd91eae707eafbe",
+    "xian_data_prep/outputs/upworthy_test.csv": "cf4bad68874fb42c7f01dfb87651fa95b0dc57fc17ec058286141a846a8417d3"
+  }
+}

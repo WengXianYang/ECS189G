@@ -1,0 +1,8 @@
+{task}
+
+Consider the audience, clarity, specificity, and curiosity created by each option. Weigh cues favoring either choice and the uncertainty from missing context. No single stylistic cue guarantees the observed outcome. Make your selection after this assessment; provide only the final JSON answer.
+
+Current comparison, encoded as JSON data:
+{headlines_json}
+
+{confidence_question}

@@ -1,0 +1,27 @@
+{
+  "confidence_scale": "50-100 percent probability of selected option matching the observed winner",
+  "dev_pairs_checked": 379,
+  "dev_pool_sha256": "84e377f95a7534b0a908b07ff11007d400b70943abcacf3f819e08caa9c26253",
+  "example_count": 4,
+  "live_dev_model_pilot": {
+    "reason": "No local Ollama service or configured API model access during preparation.",
+    "status": "pending"
+  },
+  "manual_design_choices": [
+    "Same target and confidence definition for every method; native thinking enabled only for reasoning.",
+    "Headline JSON data separates source text from instructions; target outcomes and excerpts are not rendered.",
+    "Few-shot examples contain observed winners without invented confidence labels.",
+    "Demonstration-related dev groups and near-test duplicates are excluded from every method's dev scoring pool."
+  ],
+  "maximum_prompt_characters_by_method": {
+    "few_shot": 2874,
+    "reasoning": 1921,
+    "zero_shot": 1669
+  },
+  "performance_claims": "None: offline prompt validation does not measure accuracy or calibration.",
+  "rendered_targets_by_method": {
+    "few_shot": 758,
+    "reasoning": 758,
+    "zero_shot": 758
+  }
+}

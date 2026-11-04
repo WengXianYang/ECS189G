@@ -1,0 +1,44 @@
+{
+  "examples": [
+    {
+      "answer": 1,
+      "content_group_id": "uwg_ad192fbcbf6c377bdc4ebb86a56fbf72a75918a8da6b97d9211d370c56fd8d08",
+      "dataset": "upworthy",
+      "headline_1": "If You're 32 Or Younger There's Some Stuff You Should Know About You And Your Awesomeness",
+      "headline_2": "If You're 32 Or Younger And Need An Emotional Boost, Check This Out",
+      "pair_id": "54924ec8623736001b3d0000",
+      "stratum": "A_not_significant"
+    },
+    {
+      "answer": 2,
+      "content_group_id": "uwg_576e76f7acdad8cdd0c4bcad1a0bf86759ab33388d7d5a36c70a14bbfa4bda64",
+      "dataset": "upworthy",
+      "headline_1": "We Just Lost A Pop Culture Treasure. He Gets Two Thumbs Up For The Way He Lived.",
+      "headline_2": "Two Thumbs Up To The Amazing Man Who Wrote These Words Before He Passed On",
+      "pair_id": "515df0dc03099b0002005e2f",
+      "stratum": "B_not_significant"
+    },
+    {
+      "answer": 1,
+      "content_group_id": "uwg_92fd75f0edb6b0c7f1be6ac130c2956124c58ba8a9a9453421f48cef14380ad9",
+      "dataset": "upworthy",
+      "headline_1": "You Know Those Relationships That You Stay In Too Long? Yeah -- Here’s Another One.",
+      "headline_2": "Dive In! 400,000 Swimming Pools Full Of An Asthma-Causing Substance?",
+      "pair_id": "51afe612699608741c00379c",
+      "stratum": "A_significant"
+    },
+    {
+      "answer": 2,
+      "content_group_id": "uwg_a5cb28d92e03cd4c0dac18a683f4c26e28d859606988df73184a1bb78e9bf62c",
+      "dataset": "upworthy",
+      "headline_1": "He's In A Lot Of Pain. So You Better Learn What He Has To Teach You. It's The Least You Can Do.",
+      "headline_2": "Do Not Do What Hank Green Did. It Will Hurt. A Lot. But Hey, Watch What He Did, Because Science.",
+      "pair_id": "54037b9d9454ff31d6000004",
+      "stratum": "B_significant"
+    }
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "source": "xian_data_prep/outputs/upworthy_dev.csv",
+  "source_sha256": "2b14a8c8cac2f8ff075f06c8e21a9e575c07a7276a01dce89bd91eae707eafbe"
+}
