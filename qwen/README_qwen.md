@@ -15,7 +15,7 @@ like any API model's results.
    | 8 GB | `qwen3:8b` | `ollama pull qwen3:8b` |
    | 12–16 GB | `qwen3:14b` | `ollama pull qwen3:14b` |
 
-   Write the tag you picked into `"model"` in `qwen/qwen_config.json` (default `qwen3:8b`). The team
+   Write the tag you picked into `"model"` in `qwen/qwen_config.json` (set to `qwen3:14b` for the 16 GB RTX 5060 Ti). The team
    config must record the same tag.
 4. Double-click `qwen\check_setup.bat`. It should end with `[OK] Setup works.`
 

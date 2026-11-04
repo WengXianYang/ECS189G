@@ -52,7 +52,7 @@ def load_pairs(path: Path, shards_path: Path | None, shard_label: str | None) ->
     for r in rows:
         if "test_id" in r:  # Upworthy
             pid, h_a, h_b = r["test_id"], r["headline_A"], r["headline_B"]
-            context, dataset = (r.get("excerpt") or "").strip(), "upworthy"
+            context, dataset = "", "upworthy"  # split v2: excerpts are not model inputs
         else:  # Reddit
             pid, h_a, h_b = r["pair_id"], r["title_a"], r["title_b"]
             context, dataset = f"r/{r['subreddit']}", "reddit"
@@ -81,7 +81,7 @@ def build_messages(cfg: dict, method: str, pair: dict, order: str) -> list[dict]
 
 # ------------------------------------------------------------------ parsing
 CHOICE_RE = re.compile(r'"?choice"?\s*[:=]\s*"?\s*([12])', re.I)
-CONF_RE = re.compile(r'"?confidence"?\s*[:=]\s*"?\s*(\d+(?:\.\d+)?)', re.I)
+CONF_RE = re.compile(r'"?confidence"?\s*[:=]?\s*"?\s*(\d+(?:\.\d+)?)', re.I)
 
 
 def parse(text: str) -> tuple[int | None, float | None]:
