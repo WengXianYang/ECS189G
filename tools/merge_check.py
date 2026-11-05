@@ -86,10 +86,19 @@ def run(results, shards_path, pairs_path, out, samples, max_parse_fail, min_agre
     # 4. coverage (owner copies only)
     own = res[res["is_owner_copy"]]
     expected = []
+    # samples per method: from config.yaml if present (reasoning uses fewer), else --samples
+    per_method = {}
+    cfg_path = Path(__file__).resolve().parents[1] / "config.yaml"
+    if cfg_path.exists():
+        try:
+            per_method = {k: v["samples"] for k, v in json.loads(cfg_path.read_text())["methods"].items()}
+        except (ValueError, KeyError):
+            per_method = {}
     for (m, me) in own[["model", "method"]].drop_duplicates().itertuples(index=False):
+        n_s = per_method.get(me, samples)
         for pid in shards["pair_id"]:
             for o in ("AB", "BA"):
-                for i in range(samples + 1):
+                for i in range(n_s + 1):
                     expected.append((pid, m, me, o, i))
     exp = pd.DataFrame(expected, columns=KEY)
     have = own[KEY].assign(sample_idx=lambda d: d["sample_idx"].astype(int))
@@ -166,7 +175,7 @@ def main(argv=None):
     ap.add_argument("--shards", required=True)
     ap.add_argument("--pairs")
     ap.add_argument("--out", required=True)
-    ap.add_argument("--samples", type=int, default=5, help="repeated samples per order besides greedy")
+    ap.add_argument("--samples", type=int, default=5, help="repeated samples per order besides greedy (used when config.yaml has no count for a method)")
     ap.add_argument("--max-parse-fail", type=float, default=0.02)
     ap.add_argument("--min-agree", type=float, default=0.95)
     ap.add_argument("--runner-from-file", action="store_true",
