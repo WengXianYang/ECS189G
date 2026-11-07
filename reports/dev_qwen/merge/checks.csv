@@ -1,0 +1,7 @@
+check,status,detail
+1 schema,PASS,"0 bad JSON lines, 0 rows missing required fields"
+2 duplicates,PASS,"0 duplicate rows, 0 keys with conflicting choices (exact duplicates are dropped)"
+3 parse failures,PASS,worst model x method parse-failure rate 0.00% (limit 2%)
+4 coverage,PASS,0 of 12128 expected owner calls missing (see missing_calls.csv)
+5 overlap agreement,WARN,no overlap pairs run by 2+ runners yet
+6 shard accuracy,WARN,qwen3:14b/reasoning: shard D1 0.500 outside shard D2 CI; qwen3:14b/reasoning: shard D2 0.592 outside shard D1 CI
