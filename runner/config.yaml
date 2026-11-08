@@ -1,0 +1,83 @@
+"""Shared runner configuration — frozen by Xian (Task 4) on 11/03.
+Replace placeholder prompts and model IDs with the frozen versions before real runs.
+"""
+
+# --- Model definitions ---
+models:
+  gpt-4o:
+    provider: openai
+    model_id: gpt-4o-2024-11-20
+    api_key_env: OPENAI_API_KEY
+
+  gpt-4o-mini:
+    provider: openai
+    model_id: gpt-4o-mini-2024-07-18
+    api_key_env: OPENAI_API_KEY
+
+  claude-sonnet:
+    provider: anthropic
+    model_id: claude-sonnet-4-20250514
+    api_key_env: ANTHROPIC_API_KEY
+
+  gemini-flash:
+    provider: google
+    model_id: gemini-2.0-flash
+    api_key_env: GOOGLE_API_KEY
+
+# --- Run defaults ---
+defaults:
+  samples: 5               # repeated samples per order, besides greedy (sample_idx=0)
+  sample_temperature: 0.7
+  seed: 42
+  timeout: 60              # seconds per API call
+  max_retries: 3
+  retry_base_delay: 5      # seconds; actual delay = base * 2^attempt
+  workers: 4               # concurrent API calls (watch provider rate limits)
+  progress_every: 50       # print progress every N finished calls
+
+# --- Prompt templates ---
+# {headline_1} and {headline_2} are filled by the runner (first/second shown, not A/B).
+# {context} is used only by Reddit (subreddit name). Upworthy passes an empty string.
+# Excerpt is intentionally excluded from Upworthy prompts (split_summary: excerpt_in_model_input=false).
+datasets:
+  upworthy:
+    system: "You are an expert at predicting which news headline gets more clicks. Answer only with JSON."
+    user: |
+      Two headlines were A/B tested on the same article.
+
+      Headline 1: {headline_1}
+      Headline 2: {headline_2}
+
+      Which headline got the higher click-through rate?
+      Reply with ONLY this JSON (no extra text): {{"choice": 1 or 2, "confidence": 50-100}}
+      where confidence is your percentage probability that your choice is correct.
+
+  reddit:
+    system: "You are an expert at predicting which Reddit post title gets a higher score. Answer only with JSON."
+    user: |
+      The same image was posted twice in {context} with different titles.
+
+      Title 1: {headline_1}
+      Title 2: {headline_2}
+
+      Which title got the higher score (upvotes minus downvotes)?
+      Reply with ONLY this JSON (no extra text): {{"choice": 1 or 2, "confidence": 50-100}}
+      where confidence is your percentage probability that your choice is correct.
+
+# --- Method overrides ---
+methods:
+  zero_shot: {}
+
+  few_shot:
+    few_shot: true   # injects few_shot examples from the few_shot section below
+
+  reasoning:
+    instruction: "Think step by step about what makes a headline more clickable, then give the JSON answer."
+    max_tokens: 1024  # more tokens for reasoning
+
+# --- Few-shot examples (filled by Xian, Task 5) ---
+# Each entry: headline_1, headline_2, answer (1 or 2), confidence (50-100), context (optional)
+few_shot:
+  upworthy: []   # TODO: Xian fills from few_shot.json on 11/03
+  reddit: []
+
