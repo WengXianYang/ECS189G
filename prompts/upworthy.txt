@@ -1,0 +1,1 @@
+Two headlines were tested on the same Upworthy story with the same image and excerpt. Predict which headline had the higher observed click-through rate (clicks divided by impressions) in that original test. The image, excerpt, traffic counts, and outcomes are not supplied. Select headline 1 or headline 2 even when the difference is uncertain.

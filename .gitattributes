@@ -5,3 +5,18 @@ xian_data_prep/outputs/* -text
 xian_data_prep/TEST_LOCK.json -text
 xian_data_prep/archive/**/outputs/* -text
 xian_data_prep/archive/**/TEST_LOCK.json -text
+
+# Windows batch files need CRLF
+*.bat text eol=crlf
+
+# Preserve the experiment protocol hashes on every platform.
+config.yaml text eol=lf
+few_shot.json text eol=lf
+EXPERIMENT_LOCK.json text eol=lf
+prompts/** text eol=lf
+experiments/** text eol=lf
+data/prompt_dev.csv -text
+data/shards/prompt_dev_shards.csv -text
+data/shards/upworthy_dev_shards.csv text eol=lf
+qwen/run_qwen.py text eol=lf
+qwen/qwen_config.json text eol=lf

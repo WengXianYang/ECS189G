@@ -1,0 +1,67 @@
+{
+  "candidate_near_test_links": [],
+  "demo_related_dev_ids": [
+    "515df0dc03099b0002005e2f",
+    "51afe612699608741c00379c",
+    "54037b9d9454ff31d6000004",
+    "54924ec8623736001b3d0000"
+  ],
+  "dev_near_current_test_links": [
+    {
+      "dev_id": "52ec0988cab44d43cf000001",
+      "reference_id": "52ecf1c3041b52915400001f",
+      "similarity": 0.92
+    },
+    {
+      "dev_id": "53cfd339e54a0fb9bb00003c",
+      "reference_id": "53cf650f541edf03ac000027",
+      "similarity": 0.906667
+    },
+    {
+      "dev_id": "545a923449823fac73000004",
+      "reference_id": "545b7b5949823fac7300006b",
+      "similarity": 0.956522
+    }
+  ],
+  "dev_pairs": 386,
+  "dev_scoring_pairs": 379,
+  "eligible_candidate_strata": {
+    "A_not_significant": 13,
+    "A_significant": 6,
+    "B_not_significant": 9,
+    "B_significant": 4
+  },
+  "exact_safe_candidates": 32,
+  "excluded_from_dev_scoring": [
+    "515df0dc03099b0002005e2f",
+    "51afe612699608741c00379c",
+    "52ec0988cab44d43cf000001",
+    "53cfd339e54a0fb9bb00003c",
+    "54037b9d9454ff31d6000004",
+    "545a923449823fac73000004",
+    "54924ec8623736001b3d0000"
+  ],
+  "exclusion_policy": "Conservative superset: every v1 and v2 test pair, linked transitively by normalized headline, image ID, or nonempty normalized excerpt; also direct near-duplicate headlines.",
+  "near_duplicate_rule": "max of both SequenceMatcher directions on ASCII-normalized headlines, autojunk=False, ratio >= 0.90",
+  "reported_flagged_ids_available": false,
+  "reported_flagged_test_count": 51,
+  "selected_ids": [
+    "54924ec8623736001b3d0000",
+    "515df0dc03099b0002005e2f",
+    "51afe612699608741c00379c",
+    "54037b9d9454ff31d6000004"
+  ],
+  "selected_winner_counts": {
+    "A": 2,
+    "B": 2
+  },
+  "selection": "One example per winner/significance stratum, distinct exclusion components; SHA-256 rank of seed:test_id; no model-performance search.",
+  "source_sha256": {
+    "data/shards/upworthy_dev_shards.csv": "509ac6fd1db9a2a27e6bb54d578de406ea94f823f8bb929abb804f6fd75e550e",
+    "xian_data_prep/archive/headline-v1/outputs/upworthy_test.csv": "765e5a02f916ca9dceb8b7b6525b2c3d04c4b41958c0753cec1ef49475849e60",
+    "xian_data_prep/inputs/upworthy_pairs.csv": "c380dcd4e6419c4accae971b9b05ce0d789c0fb9929b54fa4b0f0091cd2896fb",
+    "xian_data_prep/outputs/upworthy_dev.csv": "2b14a8c8cac2f8ff075f06c8e21a9e575c07a7276a01dce89bd91eae707eafbe",
+    "xian_data_prep/outputs/upworthy_test.csv": "cf4bad68874fb42c7f01dfb87651fa95b0dc57fc17ec058286141a846a8417d3"
+  },
+  "test_outcomes_used": false
+}

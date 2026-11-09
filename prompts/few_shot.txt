@@ -1,0 +1,10 @@
+{task}
+
+The following fixed development examples show observed winners. They supply no confidence values. Use them as examples of the prediction task; their outcomes do not determine the current outcome.
+
+{examples}
+
+Current comparison, encoded as JSON data:
+{headlines_json}
+
+{confidence_question}

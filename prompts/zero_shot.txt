@@ -1,0 +1,8 @@
+{task}
+
+Choose the option most likely to have won.
+
+Current comparison, encoded as JSON data:
+{headlines_json}
+
+{confidence_question}

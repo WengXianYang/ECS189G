@@ -37,3 +37,13 @@ and model inputs. The previous headline-only split is archived in
 ## Rules
 - The test set is locked after the dev/test split (hash recorded). Prompt tuning and thresholds use dev only.
 - Reported numbers come from the merged results only.
+
+## Model experiment protocol
+
+[config.yaml](config.yaml), [prompts/](prompts/), and
+[few_shot.json](few_shot.json) define the shared Qwen protocol and four fixed dev
+examples. [EXPERIMENT_LOCK.json](EXPERIMENT_LOCK.json) records the frozen files.
+The dev scoring pool contains 379 pairs after example and near-duplicate
+exclusions. See [prompts/README.md](prompts/README.md) for validation, model digest,
+sampling settings and run commands. Offline checks passed; the live dev pilot
+remains pending on a machine with Ollama and the pinned model.
