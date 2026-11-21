@@ -18,10 +18,11 @@ Examples (from repo root):
   # Yurun's dev pilot (D1 shard, Task 13)
   python runner/run.py \\
       --pairs data/prompt_dev.csv \\
-      --shards data/shards/prompt_dev_shards.csv \\
+      --shards data/shards/prompt_dev_shards.csv --only-shard D1 \\
       --provider openai --model gpt-4o-2024-11-20 \\
       --methods zero_shot few_shot reasoning \\
       --runner yurun --out-dir results/dev
+  # (Xian: --only-shard D2 --runner xian. Each runner also gets the overlap pairs.)
 
   # Reddit dev predictions
   python runner/run.py \\
@@ -89,6 +90,28 @@ def load_pairs(
             "shard": shard,
         })
     return pairs
+
+
+def select_shard(pairs: list[dict], shards_path: Path, label: str,
+                 include_overlap: bool = True) -> list[dict]:
+    """Keep only the pairs this runner owns (shard == label), plus the overlap set.
+
+    Overlap pairs owned by someone else are relabelled shard "O", so merge_check.py
+    uses them only for the cross-runner agreement check (owner copies stay authoritative).
+    """
+    with open(shards_path, encoding="utf-8-sig", newline="") as fh:
+        overlap = {r["pair_id"] for r in csv.DictReader(fh)
+                   if str(r.get("overlap", "")).strip().lower() == "true"}
+    known = {p["shard"] for p in pairs}
+    if label not in known:
+        raise SystemExit(f"--only-shard {label!r} not in shard file (shards: {sorted(known)})")
+    out = []
+    for p in pairs:
+        if p["shard"] == label:
+            out.append(p)
+        elif include_overlap and p["pair_id"] in overlap:
+            out.append({**p, "shard": "O"})
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -249,6 +272,13 @@ def run(args) -> int:
         Path(args.shards) if args.shards else None,
         args.shard,
     )
+    if args.only_shard:
+        if not args.shards:
+            print("ERROR: --only-shard needs --shards", file=sys.stderr)
+            return 1
+        pairs = select_shard(pairs, Path(args.shards), args.only_shard, not args.no_overlap)
+        n_own = sum(p["shard"] == args.only_shard for p in pairs)
+        print(f"Shard {args.only_shard}: {n_own} owned pairs + {len(pairs) - n_own} overlap pairs", flush=True)
     if args.limit:
         pairs = pairs[: args.limit]
 
@@ -426,6 +456,15 @@ def main(argv=None):
     ap.add_argument(
         "--shards",
         help="Shard CSV from tools/shards.py. Each pair gets its assigned owner shard.",
+    )
+    ap.add_argument(
+        "--only-shard",
+        help="Run only this owner shard from --shards (e.g. D1, A) plus the overlap pairs. "
+             "Without it, every pair in the file is run.",
+    )
+    ap.add_argument(
+        "--no-overlap", action="store_true",
+        help="With --only-shard: skip the overlap pairs owned by other runners.",
     )
     ap.add_argument(
         "--provider", required=True, choices=list(PROVIDERS),
