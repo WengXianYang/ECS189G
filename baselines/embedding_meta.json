@@ -1,0 +1,16 @@
+{
+  "provider": "local",
+  "model": "tfidf-4096",
+  "feature": "emb_A - emb_B",
+  "embedding_dim": 4096,
+  "n_dev": 386,
+  "n_test": 1543,
+  "n_unique_texts": 4802,
+  "best_C": 0.0027825594022071257,
+  "cv_accuracy_mean": 0.5000333000332999,
+  "cv_accuracy_std": 0.0426695977007906,
+  "in_sample_acc": 0.9948186528497409,
+  "reddit_accuracy": 0.514,
+  "dev_path": "xian_data_prep/outputs/upworthy_dev.csv",
+  "test_path": "xian_data_prep/outputs/upworthy_test.csv"
+}

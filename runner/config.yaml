@@ -1,0 +1,4 @@
+{
+  "protocol_config": "../config.yaml",
+  "_note": "Compatibility entry point for runner/run.py; shared frozen config, prompts and few_shot.json are authoritative."
+}
