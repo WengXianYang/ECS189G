@@ -634,8 +634,8 @@ def main(argv=None):
         help="Runner identifier written into every result row (gaeun / yurun / xian)",
     )
     ap.add_argument(
-        "--workers", type=int, default=4,
-        help="Concurrent API calls (default: 4). Lower if rate-limited.",
+        "--workers", type=int, default=2,
+        help="Concurrent API calls (default: 2). Lower if rate-limited (HTTP 429).",
     )
     ap.add_argument(
         "--timeout", type=int, default=300,
