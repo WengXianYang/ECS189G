@@ -186,8 +186,9 @@ def call_openai(
     ctx: dict, model_id: str, messages: list[dict], temperature: float,
     seed: int, max_tokens: int,
 ) -> tuple[str, dict]:
-    kwargs = dict(model=model_id, messages=messages, temperature=temperature,
-                  seed=seed, max_tokens=max_tokens)
+    kwargs = dict(model=model_id, messages=messages, seed=seed, max_tokens=max_tokens)
+    if not ctx.get("omit_temperature"):   # GPT-6.x reasoning models reject temperature
+        kwargs["temperature"] = temperature
     if ctx.get("reasoning_effort"):
         kwargs["extra_body"] = {"reasoning_effort": ctx["reasoning_effort"]}
     resp = _openai_client(ctx).chat.completions.create(**kwargs)
@@ -431,7 +432,7 @@ def run(args) -> int:
             "max_tokens": max_tokens, "protocol_sha256": cfg["_protocol_sha256"],
             "input_sha256": input_sha256,
         }
-        if provider_name == "anthropic":
+        if provider_name == "anthropic" or omit_temperature:
             expected.update({"thinking_mode": args.thinking, "temperature_sent": not omit_temperature})
         done = {s: done_keys(f, expected) for s, f in files.items()}
 
