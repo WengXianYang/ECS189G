@@ -65,6 +65,8 @@ sys.path.insert(0, str(ROOT))
 from experiments import protocol  # noqa: E402  (import after path setup)
 
 OVERLAP_LABEL = "O"
+# Claude 5.x models (and newer) reject any non-default temperature/top_p/top_k with HTTP 400.
+CLAUDE_NO_TEMPERATURE = re.compile(r"^claude-(opus|sonnet|haiku|fable|mythos)-([5-9]|\d\d)")
 
 
 # ---------------------------------------------------------------------------
@@ -184,8 +186,9 @@ def call_openai(
     ctx: dict, model_id: str, messages: list[dict], temperature: float,
     seed: int, max_tokens: int,
 ) -> tuple[str, dict]:
-    kwargs = dict(model=model_id, messages=messages, temperature=temperature,
-                  seed=seed, max_tokens=max_tokens)
+    kwargs = dict(model=model_id, messages=messages, seed=seed, max_tokens=max_tokens)
+    if not ctx.get("omit_temperature"):   # GPT-6.x reasoning models reject temperature
+        kwargs["temperature"] = temperature
     if ctx.get("reasoning_effort"):
         kwargs["extra_body"] = {"reasoning_effort": ctx["reasoning_effort"]}
     resp = _openai_client(ctx).chat.completions.create(**kwargs)
@@ -210,14 +213,27 @@ def call_anthropic(
     seed: int, max_tokens: int,
 ) -> tuple[str, dict]:
     import anthropic
-    client = anthropic.Anthropic(api_key=ctx["api_key"], timeout=ctx["timeout"], max_retries=0)
+    if ctx.get("client") is None:
+        ctx["client"] = anthropic.Anthropic(api_key=ctx["api_key"], timeout=ctx["timeout"],
+                                            max_retries=0)
     system = messages[0]["content"] if messages and messages[0]["role"] == "system" else ""
     chat = [m for m in messages if m["role"] != "system"]
-    resp = client.messages.create(
-        model=model_id, system=system, messages=chat,
-        temperature=temperature, max_tokens=max_tokens,
-    )
-    text = "".join(getattr(b, "text", "") for b in resp.content or [])
+    kwargs = dict(model=model_id, system=system, messages=chat, max_tokens=max_tokens)
+    # Claude 5.x models return HTTP 400 for any non-default temperature (and API version
+    # 2026-10-21+ for any temperature), so it is only sent when the model accepts it.
+    if not ctx.get("omit_temperature"):
+        kwargs["temperature"] = temperature
+    extra: dict = {}
+    if ctx.get("thinking"):
+        extra["thinking"] = {"type": ctx["thinking"]}
+    if ctx.get("reasoning_effort"):
+        extra["output_config"] = {"effort": ctx["reasoning_effort"]}
+    if extra:
+        kwargs["extra_body"] = extra
+    resp = ctx["client"].messages.create(**kwargs)
+    # keep only text blocks; thinking blocks (display defaults to "omitted") are not the answer
+    text = "".join(getattr(b, "text", "") or "" for b in resp.content or []
+                   if getattr(b, "type", "text") == "text")
     usage = getattr(resp, "usage", None)
     return text, {
         "finish_reason": getattr(resp, "stop_reason", None),
@@ -338,10 +354,20 @@ def run(args) -> int:
     print(f"Protocol SHA-256: {cfg['_protocol_sha256']}", flush=True)
 
     provider_name = args.provider
-    if args.reasoning_effort and provider_name != "openai":
+    if args.reasoning_effort and provider_name not in ("openai", "anthropic"):
         print("ERROR: --reasoning-effort is only supported with --provider openai "
-              "(OpenAI-compatible endpoints).", file=sys.stderr)
+              "(OpenAI-compatible endpoints) or anthropic (sent as output_config.effort).",
+              file=sys.stderr)
         return 1
+    if args.thinking and provider_name != "anthropic":
+        print("ERROR: --thinking is only supported with --provider anthropic.", file=sys.stderr)
+        return 1
+    omit_temperature = bool(args.omit_temperature) or (
+        provider_name == "anthropic" and CLAUDE_NO_TEMPERATURE.match(args.model or "") is not None)
+    if omit_temperature:
+        print("NOTE: temperature is not sent (the model rejects it). Rows keep the protocol "
+              "temperature label and record temperature_sent=false; the API default sampling is used.",
+              flush=True)
     for method in args.methods:
         if method not in cfg["methods"]:
             print(f"ERROR: method {method!r} not in frozen config. Choose: {list(cfg['methods'])}", file=sys.stderr)
@@ -382,7 +408,8 @@ def run(args) -> int:
     print(f"Model: {model_id}  via {api_base}  reasoning_effort={args.reasoning_effort}", flush=True)
 
     ctx = {"api_key": api_key, "base_url": base_url, "timeout": args.timeout,
-           "reasoning_effort": args.reasoning_effort, "client": None}
+           "reasoning_effort": args.reasoning_effort, "client": None,
+           "thinking": args.thinking, "omit_temperature": omit_temperature}
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -391,7 +418,7 @@ def run(args) -> int:
         mcfg       = cfg["methods"][method]
         n_samples  = 0 if args.greedy_only else mcfg["samples"]
         max_tokens = args.max_tokens or int(mcfg.get("num_predict", 256))
-        if mcfg.get("think") and not args.reasoning_effort:
+        if mcfg.get("think") and not args.reasoning_effort and args.thinking != "adaptive":
             print(f"WARNING: method {method!r} expects a reasoning model, but no --reasoning-effort "
                   "was given; the endpoint's default thinking behaviour will be used.", flush=True)
 
@@ -405,6 +432,8 @@ def run(args) -> int:
             "max_tokens": max_tokens, "protocol_sha256": cfg["_protocol_sha256"],
             "input_sha256": input_sha256,
         }
+        if provider_name == "anthropic" or omit_temperature:
+            expected.update({"thinking_mode": args.thinking, "temperature_sent": not omit_temperature})
         done = {s: done_keys(f, expected) for s, f in files.items()}
 
         # Greedy pass (idx=0) first, then repeated samples, so greedy is always complete
@@ -483,6 +512,8 @@ def run(args) -> int:
                 "dataset":          p["dataset"],
                 "seed":             seed,
                 "reasoning_effort": args.reasoning_effort,
+                "thinking_mode":    args.thinking,
+                "temperature_sent": not omit_temperature,
                 "max_tokens":       max_tokens,
                 "finish_reason":    meta.get("finish_reason"),
                 "prompt_tokens":    meta.get("prompt_tokens"),
@@ -609,7 +640,17 @@ def main(argv=None):
     )
     ap.add_argument(
         "--reasoning-effort", default=None,
-        help="Sent as reasoning_effort (e.g. low | medium | xhigh) and recorded in every row.",
+        help="OpenAI: sent as reasoning_effort (e.g. none | low | medium | xhigh). Anthropic: sent "
+             "as output_config.effort (low | medium | high | xhigh | max). Recorded in every row.",
+    )
+    ap.add_argument(
+        "--thinking", choices=["disabled", "adaptive"], default=None,
+        help="Anthropic only: sent as thinking.type. Haiku/Sonnet 5.5 accept 'disabled' at effort "
+             "high or below; Opus 5.5 and Fable 5.x always think (use 'adaptive' or omit).",
+    )
+    ap.add_argument(
+        "--omit-temperature", action="store_true",
+        help="Do not send temperature (automatic for Claude 5.x models, which reject it).",
     )
     ap.add_argument(
         "--max-tokens", type=int, default=None,
