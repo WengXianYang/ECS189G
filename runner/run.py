@@ -184,11 +184,33 @@ def call_openai(
     ctx: dict, model_id: str, messages: list[dict], temperature: float,
     seed: int, max_tokens: int,
 ) -> tuple[str, dict]:
-    kwargs = dict(model=model_id, messages=messages, temperature=temperature,
-                  seed=seed, max_tokens=max_tokens)
+    kwargs = dict(model=model_id, messages=messages, seed=seed)
     if ctx.get("reasoning_effort"):
         kwargs["extra_body"] = {"reasoning_effort": ctx["reasoning_effort"]}
-    resp = _openai_client(ctx).chat.completions.create(**kwargs)
+    token_key = "max_completion_tokens" if ctx.get("_use_max_completion_tokens") else "max_tokens"
+    kwargs[token_key] = max_tokens
+    if not ctx.get("_skip_temperature"):
+        kwargs["temperature"] = temperature
+
+    # Auto-detect newer OpenAI models (e.g. gpt-6-luna) that reject max_tokens
+    # or custom temperature, and cache the flags for the rest of the run.
+    for _ in range(3):
+        try:
+            resp = _openai_client(ctx).chat.completions.create(**kwargs)
+            break
+        except Exception as exc:
+            msg_l = str(exc).lower()
+            if "max_tokens" in msg_l and "max_completion_tokens" in msg_l and "max_tokens" in kwargs:
+                ctx["_use_max_completion_tokens"] = True
+                kwargs.pop("max_tokens", None)
+                kwargs["max_completion_tokens"] = max_tokens
+            elif "temperature" in msg_l and "unsupported" in msg_l and "temperature" in kwargs:
+                ctx["_skip_temperature"] = True
+                kwargs.pop("temperature", None)
+            else:
+                raise
+    else:
+        raise RuntimeError("OpenAI request did not succeed after parameter fallback")
     choice = resp.choices[0]
     msg = choice.message
     extra = getattr(msg, "model_extra", None) or {}
